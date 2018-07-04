@@ -1,0 +1,30 @@
+{
+  "name": "made-by",
+  "homepage": "https://github.com/guiseek/made-by",
+  "authors": [
+    "Gui Seek <guiseek@gmail.com>"
+  ],
+  "description": "Web component that shows contact information for the project creator",
+  "main": "made-by.html",
+  "keywords": [
+    "web-component",
+    "made-by",
+    "made",
+    "by",
+    "signature",
+    "project",
+    "developed",
+    "creator"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "webcomponentsjs": "^2.0.2"
+  }
+}

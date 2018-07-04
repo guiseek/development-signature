@@ -1,0 +1,170 @@
+<template>
+  <span class="signature">
+    <span class="by"></span>
+    <span class="author"></span>
+    <span class="phone"></span>
+    <span class="more">
+      <a></a>
+    </span>
+  </span>
+  <style>
+    :host {
+      font: 16px 'AmericanTypewriter', Cambria, Georgia;
+      color: #666;
+      font-weight: normal;
+    }
+
+    :host span.signature {
+      padding: 1px 1px;
+      display: inline-block;
+      width: 160px;
+      position: relative;
+    }
+
+    :host span.signature span {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 0;
+      padding-top: 3px;
+      padding-left: 28px;
+      transition: top 0.2s;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      line-height: 22px;
+    }
+
+    :host span.signature span::before {
+      content: "";
+      z-index: -1;
+      margin: 0 1px;
+      width: 160px;
+      height: 30px;
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      background: white;
+      border: 1px solid #DFE8EC;
+    }
+
+    :host span.signature span::after {
+      content: '';
+      position: absolute;
+      width: 0px;
+      top: 0;
+      left: 19px;
+      bottom: 0;
+      border-left: 1px solid #F8D3D3;
+    }
+
+    :host span.signature span:first-child {
+      display: inline;
+      z-index: 1;
+    }
+
+    :host span.signature:hover,
+    :host span.signature.open {
+      background: none;
+    }
+
+    :host span.signature:hover span,
+    :host span.signature.open span {
+      transition: all 0.2s;
+      top: auto;
+    }
+
+    :host span.signature:hover span.by,
+    :host span.signature.open span.by {
+      top: -56px;
+      -webkit-transform: perspective(100px) rotateX(20deg);
+      transform: perspective(100px) rotateX(20deg);
+      font-weight: 600;
+    }
+
+    :host span.signature:hover span.author,
+    :host span.signature.open span.author {
+      top: -26px;
+      -webkit-transform: perspective(100px) rotateX(-20deg);
+      transform: perspective(100px) rotateX(-20deg);
+    }
+
+    :host span.signature:hover span.phone,
+    :host span.signature.open span.phone {
+      -webkit-transform: perspective(100px) rotateX(20deg);
+      transform: perspective(100px) rotateX(20deg);
+      top: 0;
+    }
+
+    :host span.signature:hover span.more,
+    :host span.signature.open span.more {
+      top: 30px;
+      -webkit-transform: perspective(100px) rotateX(-20deg);
+      transform: perspective(100px) rotateX(-20deg);
+    }
+
+    :host span.signature:hover span.github,
+    :host span.signature.open span.github {
+      -webkit-transform: perspective(200px) rotateX(40deg);
+      transform: perspective(200px) rotateX(40deg);
+      top: 58px;
+    }
+  </style>
+</template>
+
+<script>
+  (function (window, document, undefined) {
+    var thatDoc = document;
+    var thisDoc = (thatDoc._currentScript || thatDoc.currentScript).ownerDocument;
+    var template = thisDoc.querySelector('template').content;
+    var MyElementProto = Object.create(HTMLElement.prototype);
+
+    MyElementProto.by = 'Made by...';
+    MyElementProto.author = 'Short name';
+    MyElementProto.phone = 'Phone number';
+    MyElementProto.more = 'Read more';
+    MyElementProto.href = '#';
+
+    MyElementProto.createdCallback = function () {
+      var shadowRoot = this.createShadowRoot();
+      var clone = thatDoc.importNode(template, true);
+      shadowRoot.appendChild(clone);
+
+      this.byElement = shadowRoot.querySelector('.by');
+      this.authorElement = shadowRoot.querySelector('.author');
+      this.phoneElement = shadowRoot.querySelector('.phone');
+      this.moreElement = shadowRoot.querySelector('.more > a');
+
+      this.setBy(this.getAttribute('by') || this.by);
+      this.setAuthor(this.getAttribute('author') || this.author);
+      this.setPhone(this.getAttribute('phone') || this.phone);
+      this.setMore(this.getAttribute('more') || this.more, this.getAttribute('href') || this.href);
+    };
+
+    MyElementProto.attributeChangedCallback = function (attr, oldVal, newVal) {
+      switch (attr) {
+        case 'by': this.setBy(newVal); break;
+        case 'author': this.setAuthor(newVal); break;
+        case 'phone': this.setPhone(newVal); break;
+        case 'more': this.setMore(newVal); break;
+      }
+    };
+    MyElementProto.setBy = function (val) {
+      this.byElement.textContent = this.by = val;
+    }
+    MyElementProto.setAuthor = function (val) {
+      this.authorElement.textContent = this.author = val;
+    };
+    MyElementProto.setPhone = function (val) {
+      this.phoneElement.textContent = this.phone = val;
+    };
+    MyElementProto.setMore = function (val, href) {
+      this.more = val;
+      this.href = href;
+      this.moreElement.setAttribute('href', href);
+      this.moreElement.textContent = this.more;
+    };
+    window.MyElement = thatDoc.registerElement('made-by', {
+      prototype: MyElementProto
+    });
+  })(window, document);
+</script>
