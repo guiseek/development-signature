@@ -4,7 +4,7 @@ Web component that shows contact information for the project creator
 
 ## Demo
 
-[Check it live!](http://webcomponents.github.io/made-by)
+[Check it live!](http://guiseek.github.io/made-by)
 
 ## Install
 
@@ -14,7 +14,7 @@ Install the component using [Bower](http://bower.io/):
 $ bower install made-by --save
 ```
 
-Or [download as ZIP](https://github.com/webcomponents/made-by/archive/master.zip).
+Or [download as ZIP](https://github.com/guiseek/made-by/archive/master.zip).
 
 ## Usage
 
